@@ -6,15 +6,23 @@ output:
 # Implémentaion d'un package de modele linéaire
 ## Description
 L'objectif de ce projet est de créer un package avec le langage python qui permet de
-résoudre un problème de regression linéaire. Notre package, nommé `mathstats` comprend 
-principalement deux modules. Ces derniers on y trouve des fonctions et des classes dont leurs fonctionnalitées seront etudiées plus amplement dans la suite.
+résoudre un problème de regression linéaire des moindres carrés ordinaires. Notre package, nommé `mathstats` fournit des classes
+et des fonctions pour estimer les coefficients du modèle. Ensuite il réalise des tests statistiques
+et affiche le résumé statistique du modèle. En fin il permet de faire des prédictions et 
+visualiser le graphe des résidus pour voir l'ajustement du modèle sur les données. Le package est construit 
+sous forme d'un style R et nos résultats sont testés par rapport au logiciel Rstudio 
+pour s'assurer qu'ils sont corrects.
+Ces fonctions ainsi que ces classes seront étudiées plus amplement dans la suite.
 
 ## Modules
 
 ### 1. [model_lineaire]()
 
- Pour miniminer l'utilisation de certains modules de python, nous avons implementé d'abord
- les fonctions suivantes:
+Pour surmonter l'une des contraintes imposées qui était de minimiser au maximum l'utilisation des
+librairies existants comme numpy et pandas. Alors nous avons coder bout à bout la factorisation de 
+cholesky et une résolution d'un sytème linéaire associée. Ensuite il s'ensuit l'implémentation d'une méthode
+de produit matriciel et une autre fonction pour transposer une matrice. En fin au lieu d'utiliser 
+la fonction `read_csv` de pandas nous avons créé notre propre fonction pour lire les données.
 
 > **cholesky(A)**
 > 
@@ -23,7 +31,7 @@ principalement deux modules. Ces derniers on y trouve des fonctions et des class
 > `retour:` L: une matrice triangulaire inférieure
 > 
 > C'est la factorisation de Cholesky qui est appliquée ici. La methode consiste à dire 
-> pour toute matrice symétrique définie positive on peut déterminer une matrice L telle que:
+> pour toute matrice symétrique définie positive on peut déterminer une matrice triangulaire inférieure L telle que:
 >  A=LxLT avec LT transposé de L.
 
 > **solve_line_sys(L,y)**
@@ -38,7 +46,7 @@ principalement deux modules. Ces derniers on y trouve des fonctions et des class
 
 > **matrix_dot(A,B)**
 > 
-> Cette fonction permet de faire la multiplication de deux matrices
+> Cette fonction permet de faire le produit de deux matrices
 > 
 > `paramètres:` A(n,p) et B(p,m) 
 > 
@@ -46,7 +54,7 @@ principalement deux modules. Ces derniers on y trouve des fonctions et des class
 
 > **matrix_transp(A)**
 > 
-> La fontion  retourne la transposée d'une matrice
+> La fontion  permet de transposer une matrice
 > 
 > `paramètres:` A matrice de taille (n,p)
 > 
@@ -62,7 +70,7 @@ principalement deux modules. Ces derniers on y trouve des fonctions et des class
 
 
 Ce module contient aussi la classe **OrdinaryLeastSquares** qui utilise la méthode 
-des moindre carrés pour estimer les paramètres du modèle.
+des moindres carrés pour estimer les paramètres du modèle.
 
 > **OrdinaryLeastSquares(intercept=True)**
 > 
@@ -94,14 +102,14 @@ des moindre carrés pour estimer les paramètres du modèle.
 > 
 > `retour:`  retourne les valeurs prédictes y, type: ndarray 
 > 
-> La fonction fait des prédictions à l'aide du modèle
+> La fonction permet de faire la prédiction  du modèle de regression linéaire
 > 
 >**get_coeffs( )**:
 > 
 > retourne les coefficients estimés du modèle associés au nom des variables.
 > 
 
-Dans ce module on y trouve ensuite la classe **LinearModel** qui herite de la classe
+Dans ce module on y trouve ensuite la classe **LinearModel** qui hérite de la classe
 **OdinaryLeastSquares**. L'idée que nous avons est de considérer cette dernière comme un outil d'estimation
 des coefficients du modèle linéaire. Alors **LinearModel** aura les mêmes attributs et
 les mêmes méthodes que **OrdianryLeastSquares**. Dans la suite nous allons décrire les fonctionnalitées qui lui sont propre.
