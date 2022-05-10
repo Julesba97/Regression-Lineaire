@@ -14,9 +14,10 @@ dataset = read_dataset('fuel2001.txt')
 X = dataset[["Income", "Miles", "Tax", "MPC"]]
 X["Dlic"] = 1000 * dataset.Drivers / dataset.Pop
 y = 1000 * dataset.FuelC / dataset.Pop
-mod = LinearModel(intercept=False)
+mod = LinearModel(intercept=True)
 mod.fit(X, y)
-mod2 = Ridge(intercept=False, lambada=4000)
+print(mod.summary(X, y))
+mod2 = Ridge(intercept=True, lambada=2)
 mod2.fit(X, y)
 
 
